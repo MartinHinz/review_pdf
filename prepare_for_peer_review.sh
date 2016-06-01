@@ -1,14 +1,8 @@
 #/bim/bash
 
-MANUSCRIPT_PREFIX='a-'
-CAPTION_PREFIX='b-'
-TABLES_PREFIX='c-'
-FIGURE_PREFIX='d-'
-
-INPUT_DIR='input'
-OUTPUT_DIR='output'
-SETTINGS_DIR='settings'
-FINAL_OUTPUT_DIR='final_output'
+# Reading Config
+echo "Reading config...." >&2
+source settings/config
 
 # Clear output
 rm $OUTPUT_DIR/* -r
