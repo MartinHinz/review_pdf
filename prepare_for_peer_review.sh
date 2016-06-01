@@ -8,6 +8,7 @@ FIGURE_PREFIX='d-'
 INPUT_DIR='input'
 OUTPUT_DIR='output'
 SETTINGS_DIR='settings'
+FINAL_OUTPUT_DIR='final_output'
 
 # Clear output
 rm $OUTPUT_DIR/* -r
@@ -85,5 +86,5 @@ done
 
 # re-pdf
 #pandoc $mainfile -o $OUTPUT_DIR/$(basename $mainfile).pdf --latex-engine=xelatex -H $SETTINGS_DIR/options.sty 
-pandoc $mainfile -o review_pdf.pdf --latex-engine=xelatex -H $SETTINGS_DIR/options_pn.sty 
-tar -cf output_archiv.tar "$OUTPUT_DIR"/ 
+pandoc $mainfile -o "$FINAL_OUTPUT_DIR"/review_pdf.pdf --latex-engine=xelatex -H $SETTINGS_DIR/options_pn.sty 
+tar -cf "$FINAL_OUTPUT_DIR"/output_archiv.tar "$OUTPUT_DIR"/ 
