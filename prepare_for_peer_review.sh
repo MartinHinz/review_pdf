@@ -10,6 +10,7 @@ rm $OUTPUT_DIR/* -r
 
 for file in $INPUT_DIR/$MANUSCRIPT_PREFIX*
 do
+if [ -f $file ] ; then
  echo "Processing $file"
  basename=$(basename $file)
  mainfile=$OUTPUT_DIR/$basename-all.md
@@ -20,12 +21,14 @@ do
  echo "$(pandoc -t markdown ""$file"")" >> $mdfile
  cat $mdfile > $mainfile
  pandoc "$mdfile" -o "$outfile" --latex-engine=xelatex -H $SETTINGS_DIR/options.sty
+fi
 done
 
 # Captions
 
 for file in $INPUT_DIR/$CAPTION_PREFIX*
 do
+ if [ -f $file ] ; then
  echo "Processing $file"
  basename=$(basename $file)
  mdfile="$OUTPUT_DIR/${basename%.*}.md"
@@ -35,12 +38,14 @@ do
  printf "$(pandoc -t markdown ""$file"")" >> $mdfile
  pandoc "$mdfile" -o "$outfile" --latex-engine=xelatex -H $SETTINGS_DIR/options_pn.sty
  cat $mdfile >> $mainfile
+fi
 done
 
 # Tables
 COUNTER=0
 for file in "$INPUT_DIR"/"$TABLES_PREFIX"*
 do
+ if [ -f $file ] ; then
  let COUNTER=COUNTER+1 
  echo "Processing $file"
  basename=$(basename $file)
@@ -60,12 +65,14 @@ do
   printf "![$basename]($file)\ \n\n\pagebreak" >> $outfile_md 
  done
  cat $outfile_md >> $mainfile
+fi
 done
 
 # Figures
 COUNTER=0
 for file in "$INPUT_DIR"/"$FIGURE_PREFIX"*
 do
+if [ -f $file ] ; then
  let COUNTER=COUNTER+1 
  echo "Processing $file"
  basename=$(basename $file)
@@ -76,6 +83,7 @@ do
  printf "\n\n\pagebreak\n\n## Figure $COUNTER: ${basename:5}\n\n" > $outfile_md
  printf "![$basename]($outfile_img)\ " >> $outfile_md
  cat $outfile_md >> $mainfile
+fi
 done
 
 # re-pdf
