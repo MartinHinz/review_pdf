@@ -1,0 +1,23 @@
+\usepackage{setspace}
+ \doublespacing
+ \usepackage[vmargin=1in,hmargin=1in]{geometry}
+ \usepackage{lineno}
+ \linenumbers
+ \usepackage{longtable}
+
+\let\oldlongtable\longtable
+\let\endoldlongtable\endlongtable
+\renewenvironment{longtable}{\tiny\oldlongtable}{\endoldlongtable\normalsize}
+
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy} 
+
+\rhead{\thepage\ of \pageref*{LastPage}}
+\lhead{Megaliths, Societies, Landscapes}
+
+\usepackage{draftwatermark}
+\SetWatermarkText{For Review Only}
+\SetWatermarkScale{.5}
+

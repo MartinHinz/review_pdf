@@ -1,0 +1,9 @@
+\usepackage{setspace}
+ \doublespacing
+ \usepackage[vmargin=1in,hmargin=1in]{geometry}
+ \usepackage{longtable}
+
+\let\oldlongtable\longtable
+\let\endoldlongtable\endlongtable
+\renewenvironment{longtable}{\tiny\oldlongtable}{\endoldlongtable\normalsize}
+
