@@ -18,7 +18,7 @@ if [ -f "$file" ] ; then
  outfile="$OUTPUT_DIR/${basename%.*}.pdf"
  if [[ $(xdg-mime query filetype "$file") == application\/msword ]]
  then
-   echo "docfile"
+   echo "converting to docx"
    unoconv -f docx "$file"
    file="$INPUT_DIR/${basename%.*}.docx"
  fi
@@ -41,7 +41,7 @@ do
  outfile="$OUTPUT_DIR/${basename%.*}.pdf"
  if [[ $(xdg-mime query filetype "$file") == application\/msword ]]
  then
-   echo "docfile"
+   echo "converting to docx"
    unoconv -f docx "$file"
    file="$INPUT_DIR/${basename%.*}.docx"
  fi
@@ -66,7 +66,7 @@ do
 # printf "\n\pagebreak\n\n# Table $((i+1))\n\n" > $outfile
  if [[ $(xdg-mime query filetype "$file") == application\/msword ]]
  then
-   echo "docfile"
+   echo "converting to docx"
    unoconv -f docx "$file"
    file="$INPUT_DIR/${basename%.*}.docx"
  fi
