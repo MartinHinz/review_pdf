@@ -92,16 +92,20 @@ COUNTER=0
 for file in "$INPUT_DIR"/"$FIGURE_PREFIX"*
 do
 if [ -f "$file" ] ; then
- let COUNTER=COUNTER+1 
+ let COUNTER=COUNTER+1
  echo "Processing $file"
  basename=$( echo $(basename "$file") |  sed 's/[^A-Za-z0-9_.]/-/g;s/-*-/-/g;s/^-//;s/-$//;s/-\././g' )
+ this_fig_nr=$(echo "$basename" | cut -c3-4)
  outfile_img="$OUTPUT_DIR/${basename%.*}.pdf"
  $(convert "$file" $outfile_img)
  outfile_md="$OUTPUT_DIR/${basename%.*}.md"
  touch $outfile_md
- printf "\n\n\pagebreak\n\n## Figure $COUNTER: ${basename:5}\n\n" > "$outfile_md"
- printf "![$basename]($outfile_img)\ " >> "$outfile_md"
+ if [ "$this_fig_nr" != "$last_fig_nr" ]; then 
+   printf "\n\n\pagebreak\n\n## Figure $this_fig_nr: ${basename:5}" > "$outfile_md"
+ fi
+ printf "\n\n![$basename]($outfile_img)\ " >> "$outfile_md"
  cat "$outfile_md" >> "$mainfile"
+ last_fig_nr=$this_fig_nr
 fi
 done
 
