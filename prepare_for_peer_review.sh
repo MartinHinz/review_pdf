@@ -27,7 +27,6 @@ if [ -f "$file" ] ; then
 # echo "$(pandoc -t markdown ""$file"" --extract-media=img)" >> "$mdfile"
  pandoc -t markdown "$file" --extract-media=img >> "$mdfile"
  cat "$mdfile" > "$mainfile"
- echo "$mainfile"
  pandoc "$mdfile" -o "$outfile" --latex-engine=xelatex -H $SETTINGS_DIR/options.sty
 fi
 done
