@@ -38,9 +38,6 @@ do
  if [ -f "$file" ] ; then
  echo "Processing $file"
  basename=$( echo $(basename "$file") |  sed 's/[^A-Za-z0-9_.]/-/g;s/-*-/-/g;s/^-//;s/-$//;s/-\././g' )
- echo '#####################'
- echo $basename
- echo '#####################'
  mdfile="$OUTPUT_DIR"/"${basename%.*}".md
  outfile="$OUTPUT_DIR"/"${basename%.*}".pdf
  if [[ $(xdg-mime query filetype "$file") == application\/msword ]]
