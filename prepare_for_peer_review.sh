@@ -100,12 +100,16 @@ if [ -f "$file" ] ; then
  this_filetype=$(xdg-mime query filetype "$file")
  if [[ " ${VECTORFORMATS[@]} " =~ " ${this_filetype} " ]]; then
   if [[ $this_filetype == image\/x-eps ]]; then
-    ps2pdf -r150 -dPDFSETTINGS=/screen -dEPSCrop "$file" $outfile_img
+    ps2pdf -r150 -dPDFSETTINGS=/ebook -dEPSCrop "$file" $outfile_img
+  elif [[ $this_filetype == application\/illustrator ]]; then
+    gs -dNOPAUSE -dBATCH -sDEVICE=ps2write -sOutputFile=$outfile_img.ps "$file"
+    ps2pdf -r150 -dPDFSETTINGS=/ebook -dEPSCrop "$outfile_img.ps" $outfile_img
+    rm "$outfile_img.ps"
   else
     convert "$file" $outfile_img
  fi
  else
- $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
+ $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 90% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
  fi
  outfile_md="$OUTPUT_DIR/${basename%.*}.md"
  touch $outfile_md

@@ -7,4 +7,4 @@ INPUT_DIR='input'
 OUTPUT_DIR='output'
 SETTINGS_DIR='settings'
 FINAL_OUTPUT_DIR='final_output'
-VECTORFORMATS=(image/x-eps)
+VECTORFORMATS=(image/x-eps application/illustrator)
