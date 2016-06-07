@@ -38,8 +38,11 @@ do
  if [ -f "$file" ] ; then
  echo "Processing $file"
  basename=$( echo $(basename "$file") |  sed 's/[^A-Za-z0-9_.]/-/g;s/-*-/-/g;s/^-//;s/-$//;s/-\././g' )
- mdfile="$OUTPUT_DIR/${basename%.*}.md"
- outfile="$OUTPUT_DIR/${basename%.*}.pdf"
+ echo '#####################'
+ echo $basename
+ echo '#####################'
+ mdfile="$OUTPUT_DIR"/"${basename%.*}".md
+ outfile="$OUTPUT_DIR"/"${basename%.*}".pdf
  if [[ $(xdg-mime query filetype "$file") == application\/msword ]]
  then
    echo "converting to docx"
@@ -48,7 +51,7 @@ do
  fi
  touch "$mdfile"
  printf "\n\n\pagebreak\n\n## Captions\n\n" > "$mdfile"
- printf "$(pandoc -t markdown ""$file"")" >> "$mdfile"
+ pandoc -t markdown "$file" >> "$mdfile"
  pandoc "$mdfile" -o "$outfile" --latex-engine=xelatex -H $SETTINGS_DIR/options_pn.sty
  cat "$mdfile" >> "$mainfile"
 fi
