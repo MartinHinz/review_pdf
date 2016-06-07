@@ -97,7 +97,16 @@ if [ -f "$file" ] ; then
  basename=$( echo $(basename "$file") |  sed 's/[^A-Za-z0-9_.]/-/g;s/-*-/-/g;s/^-//;s/-$//;s/-\././g' )
  this_fig_nr=$(echo "$basename" | cut -c3-4)
  outfile_img="$OUTPUT_DIR/${basename%.*}.pdf"
+ this_filetype=$(xdg-mime query filetype "$file")
+ if [[ " ${VECTORFORMATS[@]} " =~ " ${this_filetype} " ]]; then
+  if [[ $this_filetype == image\/x-eps ]]; then
+    ps2pdf -r150 -dPDFSETTINGS=/screen -dEPSCrop "$file" $outfile_img
+  else
+    convert "$file" $outfile_img
+ fi
+ else
  $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
+ fi
  outfile_md="$OUTPUT_DIR/${basename%.*}.md"
  touch $outfile_md
  if [ "$this_fig_nr" != "$last_fig_nr" ]; then 
