@@ -33,7 +33,7 @@ fi
 done
 
 # Captions
-for file in "$INPUT_DIR/$CAPTION_PREFIX*"
+for file in "$INPUT_DIR"/"$CAPTION_PREFIX"*
 do
  if [ -f "$file" ] ; then
  echo "Processing $file"
@@ -97,7 +97,7 @@ if [ -f "$file" ] ; then
  basename=$( echo $(basename "$file") |  sed 's/[^A-Za-z0-9_.]/-/g;s/-*-/-/g;s/^-//;s/-$//;s/-\././g' )
  this_fig_nr=$(echo "$basename" | cut -c3-4)
  outfile_img="$OUTPUT_DIR/${basename%.*}.pdf"
- $(convert "$file" $outfile_img)
+ $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
  outfile_md="$OUTPUT_DIR/${basename%.*}.md"
  touch $outfile_md
  if [ "$this_fig_nr" != "$last_fig_nr" ]; then 
