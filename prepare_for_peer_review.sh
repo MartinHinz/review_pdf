@@ -123,5 +123,5 @@ done
 
 # re-pdf
 #pandoc $mainfile -o $OUTPUT_DIR/$(basename $mainfile).pdf --latex-engine=xelatex -H $SETTINGS_DIR/options.sty 
-pandoc "$mainfile" -o "$FINAL_OUTPUT_DIR"/review_pdf.pdf --latex-engine=xelatex -H $SETTINGS_DIR/options_pn.sty 
+pandoc "$mainfile" -o "$FINAL_OUTPUT_DIR"/review_pdf.pdf --latex-engine=xelatex -V mainfont="Linux Libertine O" -H $SETTINGS_DIR/options_pn.sty 
 tar -cf "$FINAL_OUTPUT_DIR"/output_archiv.tar "$OUTPUT_DIR"/ 
