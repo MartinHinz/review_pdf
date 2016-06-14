@@ -105,15 +105,16 @@ if [ -f "$file" ] ; then
     ps2pdf -r150 -dPDFSETTINGS=/ebook -dEPSCrop "$outfile_img.ps" $outfile_img
     rm "$outfile_img.ps"
   elif [[ $this_filetype == application\/pdf ]]; then
-  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook \
     -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
     -dCompressFonts=true -r150 -sOutputFile=$outfile_img "$file" 
   else
     convert "$file" $outfile_img
  fi
  else
-   THIS_DENSITY=$(identify -format "%x" "$file")
-   if [ "$THIS_DENSITY" -le "150" ];then
+   THIS_WIDTH=$(identify -format "%w" "$file")
+   THIS_HEIGHT=$(identify -format "%h" "$file")
+   if [ "$THIS_WIDTH" -le "1240" ] || [ "$THIS_HEIGHT" -le "1753" ] ;then
      $(convert "$file" -compress Zip $outfile_img)
    else
      $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 90% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
