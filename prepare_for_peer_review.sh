@@ -104,6 +104,10 @@ if [ -f "$file" ] ; then
     gs -dNOPAUSE -dBATCH -sDEVICE=ps2write -sOutputFile=$outfile_img.ps "$file"
     ps2pdf -r150 -dPDFSETTINGS=/ebook -dEPSCrop "$outfile_img.ps" $outfile_img
     rm "$outfile_img.ps"
+  elif [[ $this_filetype == application\/pdf ]]; then
+  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/default \
+    -dNOPAUSE -dQUIET -dBATCH -dDetectDuplicateImages \
+    -dCompressFonts=true -r150 -sOutputFile=$outfile_img "$file" 
   else
     convert "$file" $outfile_img
  fi
