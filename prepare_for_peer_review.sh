@@ -112,7 +112,12 @@ if [ -f "$file" ] ; then
     convert "$file" $outfile_img
  fi
  else
- $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 90% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
+   THIS_DENSITY=$(identify -format "%x" "$file")
+   if [ "$THIS_DENSITY" -le "150" ];then
+     $(convert "$file" -compress Zip $outfile_img)
+   else
+     $(convert -strip -interlace Plane -gaussian-blur 0.05 -quality 90% -units PixelsPerInch "$file" -compress jpeg -resize 1753x1240 -units PixelsPerInch -density 150 $outfile_img)
+   fi
  fi
  outfile_md="$OUTPUT_DIR/${basename%.*}.md"
  touch $outfile_md
