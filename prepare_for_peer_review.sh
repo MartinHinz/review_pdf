@@ -6,6 +6,7 @@ source settings/config
 
 # Clear output
 rm "$OUTPUT_DIR"/* -r
+cp "$INPUT_DIR"/.gitignore "$OUTPUT_DIR"
 # Manuscript
 
 for file in "$INPUT_DIR"/"$MANUSCRIPT_PREFIX"*
